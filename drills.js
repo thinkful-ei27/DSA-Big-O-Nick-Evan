@@ -229,31 +229,30 @@ function fibonacci(n) {
   // Base case
   if (n <= 2) {
     return 1;
-  }	
+  }
   // Recursive case
-  return fibonacci(n - 1) + fibonacci(n - 2);	
+  return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
 //Big O = O(n) because while it iterates through the collection data, it is not comparing every number
 //to every other number or anything of that nature.
 
 //Anagrams
-function anagrams(prefix, str){
-  if(str.length <= 1){
-      console.log(`The anagram is ${prefix}${str}`);
+function anagrams(prefix, str) {
+  if (str.length <= 1) {
+    console.log(`The anagram is ${prefix}${str}`);
   } else {
-      for(let i=0; i<str.length; i++){
-          let currentLetter = str.substring(i, i+1); 
-          let previousLetters = str.substring(0,i);
-          let afterLetters = str.substring(i+1);
-          anagrams(prefix+currentLetter, previousLetters+afterLetters);
-      }
+    for (let i = 0; i < str.length; i++) {
+      let currentLetter = str.substring(i, i + 1);
+      let previousLetters = str.substring(0, i);
+      let afterLetters = str.substring(i + 1);
+      anagrams(prefix + currentLetter, previousLetters + afterLetters);
+    }
   }
 }
-function printAnagram(word){
+function printAnagram(word) {
   //console.log(`The word for which we will find an anagram is ${word}`);
   anagrams(' ', word);
-
 }
 
 // printAnagram('Antidisestablishmentarianism');
@@ -263,23 +262,171 @@ function printAnagram(word){
 
 //Animal Heirarchy
 const animalHierarchy = [
-  {id: 'Animals', parent: null},
-  {id: 'Mammals', parent: 'Animals'},
-  {id: 'Dogs', parent:'Mammals' },
-  {id: 'Cats', parent:'Mammals' },
-  {id: 'Golden Retriever', parent: 'Dogs'},
-  {id: 'Husky', parent:'Dogs' },
-  {id: 'Bengal', parent:'Cats' }
-]
+  { id: 'Animals', parent: null },
+  { id: 'Mammals', parent: 'Animals' },
+  { id: 'Dogs', parent: 'Mammals' },
+  { id: 'Cats', parent: 'Mammals' },
+  { id: 'Golden Retriever', parent: 'Dogs' },
+  { id: 'Husky', parent: 'Dogs' },
+  { id: 'Bengal', parent: 'Cats' }
+];
 
 // ==============================
 function traverse(animalHierarchy, parent) {
   let node = {};
-  animalHierarchy.filter(item => item.parent === parent)
-                 .forEach(item => node[item.id] = traverse(animalHierarchy, item.id));
-  return node;  
+  animalHierarchy
+    .filter(item => item.parent === parent)
+    .forEach(item => (node[item.id] = traverse(animalHierarchy, item.id)));
+  return node;
 }
 
 //BigO: O(n): While we're doing filter and forEach as well as then calling traverse, each of these are
 //linear functions that lead into one another, but are not calculated within one another.
 //(Filter produces an array. forEach then uses that array.)
+
+let organization = {
+  Zuckerberg: {
+    Schroepfer: {
+      Bosworth: {
+        Steve: {},
+        Kyle: {},
+        Andra: {}
+      },
+      Zhao: {
+        Richie: {},
+        Sofia: {},
+        Jen: {}
+      },
+      Badros: {
+        John: {},
+        Mike: {},
+        Pat: {}
+      },
+      Parikh: {
+        Zach: {},
+        Ryan: {},
+        Tes: {}
+      }
+    },
+    Schrage: {
+      VanDyck: {
+        Sabrina: {},
+        Michelle: {},
+        Josh: {}
+      },
+      Swain: {
+        Blanch: {},
+        Tom: {},
+        Joe: {}
+      },
+      Frankovsky: {
+        Jasee: {},
+        Brian: {},
+        Margaret: {}
+      }
+    },
+    Sandberg: {
+      Goler: {
+        Eddie: {},
+        Julie: {},
+        Annie: {}
+      },
+      Hernandez: {
+        Rowi: {},
+        Inga: {},
+        Morgan: {}
+      },
+      Moissinac: {
+        Amy: {},
+        Chuck: {},
+        Vinni: {}
+      },
+      Kelley: {
+        Eric: {},
+        Ana: {},
+        Wes: {}
+      }
+    }
+  }
+};
+
+function traverseA(data, depth = 0) {
+  let indent = ' '.repeat(depth * 4);
+  Object.keys(data).forEach(key => {
+    console.log(indent + key);
+    traverseA(data[key], depth + 1);
+  });
+}
+
+// time complexity = O(n) because like the animal hierarchy each function call is a linear call.
+
+// traverseA(organization);
+
+//###############################ITERATIVE############################
+
+function countSheepLoop(num) {
+  for (let i = num; i > 0; i--) {
+    console.log(`counting sheeps ${i}`);
+  }
+}
+//  countSheepLoop(10);
+
+// O(n) for loop
+
+function double_all(arr) {
+  var ret = Array(arr.length);
+  for (var i = 0; i < arr.length; ++i) {
+    ret[i] = arr[i] * 2;
+  }
+  return ret;
+}
+// let arr = [10,4,5,2,1];
+// console.log(double_all(arr));
+
+// O(n) for loop
+
+function reverse_tail(str) {
+  var accumulator = '';
+  while (str !== '') {
+    accumulator = str[0] + accumulator;
+    str = str.slice(1);
+  }
+  return accumulator;
+}
+
+// O(n) while loop
+
+// O(n) for the rest 🤓
+//convertToBinary
+function convertToBinaryIter(num) {
+  var binary = '';
+  while (num > 0) {
+    let rem = Math.floor(num % 2);
+    binary = rem + binary;
+    num = Math.floor(num / 2);
+  }
+  return binary;
+}
+console.log(convertToBinaryIter(124)); //1111100
+// O(log n)
+
+function factorialIterative(number) {
+  let fact = 1;
+  for (let i = 1; i <= number; i++) {
+    fact *= i;
+  }
+  return fact;
+}
+console.log(factorialIterative(5));
+
+// O(n) loopage
+
+function factorialIterative(number) {
+  let fact = 1;
+  for (let i = 1; i <= number; i++) {
+    fact *= i;
+  }
+  return fact;
+}
+console.log(factorialIterative(5));
+//O(n) loopin it up loopin it down loopin it all around town
