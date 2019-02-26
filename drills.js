@@ -220,13 +220,66 @@ function factorial(n) {
 
 // console.log(factorial(100));
 
-// 11;
-// 10 * factorial(9);
-// 9 * factorial(8);
-// 8 * factorial(7);
-// 7 * factorial(6);
-// 6 * factorial(5);
-// 5 * factorial(4);
-// 4 * factorial(3);
-// 3 * factorial(2);
-// 2 * factorial(1);
+//Fibonacci
+function fibonacci(n) {
+  // Base case
+  if (n <= 0) {
+    return 0;
+  }
+  // Base case
+  if (n <= 2) {
+    return 1;
+  }	
+  // Recursive case
+  return fibonacci(n - 1) + fibonacci(n - 2);	
+}
+
+//Big O = O(n) because while it iterates through the collection data, it is not comparing every number
+//to every other number or anything of that nature.
+
+//Anagrams
+function anagrams(prefix, str){
+  if(str.length <= 1){
+      console.log(`The anagram is ${prefix}${str}`);
+  } else {
+      for(let i=0; i<str.length; i++){
+          let currentLetter = str.substring(i, i+1); 
+          let previousLetters = str.substring(0,i);
+          let afterLetters = str.substring(i+1);
+          anagrams(prefix+currentLetter, previousLetters+afterLetters);
+      }
+  }
+}
+function printAnagram(word){
+  //console.log(`The word for which we will find an anagram is ${word}`);
+  anagrams(' ', word);
+
+}
+
+// printAnagram('Antidisestablishmentarianism');
+//Big O = O(n!) I tried to run the above and it was still running after a minute, so I'm going to assume
+//that it's factorial. We ended here: The anagram is Antidisestablishmtimiansnrae
+//(Adding a letter makes the amount of computations increase by n!
+
+//Animal Heirarchy
+const animalHierarchy = [
+  {id: 'Animals', parent: null},
+  {id: 'Mammals', parent: 'Animals'},
+  {id: 'Dogs', parent:'Mammals' },
+  {id: 'Cats', parent:'Mammals' },
+  {id: 'Golden Retriever', parent: 'Dogs'},
+  {id: 'Husky', parent:'Dogs' },
+  {id: 'Bengal', parent:'Cats' }
+]
+
+// ==============================
+function traverse(animalHierarchy, parent) {
+  let node = {};
+  animalHierarchy.filter(item => item.parent === parent)
+                 .forEach(item => node[item.id] = traverse(animalHierarchy, item.id));
+  return node;  
+}
+
+//BigO: O(n): While we're doing filter and forEach as well as then calling traverse, each of these are
+//linear functions that lead into one another, but are not calculated within one another.
+//(Filter produces an array. forEach then uses that array.)
